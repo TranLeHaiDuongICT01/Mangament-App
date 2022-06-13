@@ -14,6 +14,6 @@ Create connect with MongoDB through Atlats by creating file .env format like .en
 <code>npm start</code>
 
 ## Configs
-API URL: http://localhost:5000
-GraphQL URL: http://localhost:5000/graphql
+API URL: http://localhost:5000<br>
+GraphQL URL: http://localhost:5000/graphql<br>
 React App: http://localhost:3000
