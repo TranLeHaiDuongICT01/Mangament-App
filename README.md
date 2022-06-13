@@ -9,8 +9,8 @@ npm install
 Create connect with MongoDB through Atlats by creating file .env format like .env.example
 
 ## Run backend & frontend in two separate terminals
-<code>npm run dev</code>
-<code>cd client</code>
+<code>npm run dev</code>\n
+<code>cd client</code>\n
 <code>npm start</code>
 
 ## Configs
