@@ -3,7 +3,7 @@ App managing project of clients using Mern and graphQL
 
 ## Usage
 ### Install backend dependencies
-npm install
+<code>npm install</code>
 
 ## Add Mongo URL
 Create connect with MongoDB through Atlats by creating file .env format like .env.example
