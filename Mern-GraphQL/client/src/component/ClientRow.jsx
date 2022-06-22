@@ -3,21 +3,24 @@ import { FaTrash } from 'react-icons/fa'
 import { DELETE_CLIENT } from '../mutation/clientMutation'
 import { useMutation } from '@apollo/client'
 import { GET_CLIENTS } from '../query/clientQueries'
+import { GET_PROJECTS } from '../query/projectQueries'
 
 const ClientRow = ({ client }) => {
     const [deleteClient] = useMutation(DELETE_CLIENT, {
         variables: { id: client.id },
-        // refetchQueries: [{ query: GET_CLIENTS }],
-        update(cache, { data: { deleteClient } }) {
-            const { clients } = cache.readQuery({
-                query: GET_CLIENTS,
-            })
-
-            cache.writeQuery({
-                query: GET_CLIENTS,
-                data: { clients: clients.filter(item => item.id !== deleteClient.id) }
-            })
-        }
+        refetchQueries: [{ query: GET_CLIENTS }, {query: GET_PROJECTS}],
+        // update(cache, { data: { deleteClient } }) {
+        //     const { clients } = cache.readQuery({
+        //         query: GET_CLIENTS,
+        //     })
+        //     cache.writeQuery({
+        //         query: GET_CLIENTS,
+        //         data: { 
+        //             clients: clients.filter(item => item.id !== deleteClient.id),
+                    
+        //          }
+        //     })
+        // }
     })
     return (
         <tr>

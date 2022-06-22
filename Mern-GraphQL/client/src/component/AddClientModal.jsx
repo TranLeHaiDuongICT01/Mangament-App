@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { FaUser } from 'react-icons/fa'
-
+import { ADD_CLIENT } from '../mutation/clientMutation'
+import { GET_CLIENTS } from '../query/clientQueries'
 
 const AddClientModal = () => {
     const [formData, setFormData] = useState({
@@ -10,18 +11,38 @@ const AddClientModal = () => {
         phone: ''
     })
 
+    const [addClient] = useMutation(ADD_CLIENT, {
+        variables: { name: formData.name, email: formData.email, phone: formData.phone },
+        update(cache, { data: { addClient } }) {
+            const { clients } = cache.readQuery({
+                query: GET_CLIENTS,
+            })
+
+            cache.writeQuery({
+                query: GET_CLIENTS,
+                data: { clients: [...clients, addClient] }
+            })
+        }
+    })
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
+        addClient(formData.name, formData.email, formData.phone);
+        setFormData({
+            name: '',
+            email: '',
+            phone: ''
+        })
     }
     return (
         <>
             <button
                 type='button'
-                className='btn btn-secondary'
+                className='btn btn-secondary m-3'
                 data-bs-toggle='modal'
                 data-bs-target='#addClientModal'
             >
@@ -70,7 +91,7 @@ const AddClientModal = () => {
                                         id='email'
                                         name='email'
                                         value={formData.email}
-                                        onChange={(e) => handleChange}
+                                        onChange={handleChange}
                                     />
                                 </div>
                                 <div className='mb-3'>
